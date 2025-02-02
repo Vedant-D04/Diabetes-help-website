@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Detect Diabetic Retinopathy</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/" aria-current="page">Home</a></li>
+                <li><a href="/detect">Detect Diabetes</a></li>
+                <li><a href="/detect_retinopathy">Detect Diabetic Retinopathy</a></li>
+                <li><a href="/faqbot">FAQBot</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="intro">
+            <h1>Diabetic Retinopathy Detection</h1>
+            <p>Upload a retinal image to analyze the risk of diabetic retinopathy using our advanced detection tool.</p>
+        </section>
+
+        {% if prediction %}
+            <section class="result-section" aria-live="polite">
+                <h2>Your Result</h2>
+                <p class="prediction {% if prediction == 'Diabetic Retinopathy Detected' %}prediction-positive{% else %}prediction-negative{% endif %}">
+                    {{ prediction }}
+                </p>
+                <p class="class-description">{{ class_description }}</p>
+                <p class="consultation-advice">Please consult a healthcare professional for further guidance.</p>
+            </section>
+        {% else %}
+            <section class="form-section">
+                <h2>Upload Retinal Image</h2>
+                <form action="/detect_retinopathy" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="image-upload">Upload Retinal Image:</label>
+                        <input type="file" id="image-upload" name="image" accept="image/*" required>
+                    </div>
+                    <button type="submit">Analyze Image</button>
+                </form>
+            </section>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Diabetic Retinopathy Detection System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

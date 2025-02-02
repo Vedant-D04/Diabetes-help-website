@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>Detect Diabetes</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/detect">Detect Diabetes</a></li>
+                <li><a href="/detect_retinopathy">Detect Diabetic Retinopathy</a></li>
+                <li><a href="/faqbot">FAQBot</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="intro">
+            <h1>Diabetes Detection</h1>
+            <p>Our diabetes detection tool analyzes your health indicators to estimate your risk of diabetes.</p>
+        </section>
+
+        {% if prediction %}
+            <section class="result-section">
+                <h2>Your Result:</h2>
+                <p style="font-size: 24px; font-weight: bold;">
+                    {% if prediction == "Diabetes Detected" %}
+                        <span style="color: red">{{ prediction }}</span>
+                    {% else %}
+                        <span style="color: green">{{ prediction }}</span>
+                    {% endif %}
+                </p>
+                <p style="font-size: 36px;">Please consult a healthcare professional for further guidance.</p>
+            </section>
+        {% else %}
+            <section class="form-section">
+                <h2>Fill in Your Details</h2>
+                <form action="/predict" method="POST">
+                    <label for="pregnancies">Number of Pregnancies:</label>
+                    <input type="number" id="pregnancies" name="Pregnancies" required>
+
+                    <label for="glucose">Glucose Level:</label>
+                    <input type="number" id="glucose" name="Glucose" required>
+
+                    <label for="blood_pressure">Blood Pressure:</label>
+                    <input type="number" id="blood_pressure" name="BloodPressure" required>
+
+                    <label for="skin_thickness">Skin Thickness:</label>
+                    <input type="number" id="skin_thickness" name="SkinThickness" required>
+
+                    <label for="insulin">Insulin Level:</label>
+                    <input type="number" id="insulin" name="Insulin" required>
+
+                    <label for="bmi">BMI:</label>
+                    <input type="number" step="0.1" id="bmi" name="BMI" required>
+
+                    <label for="diabetes_pedigree_function">Diabetes Pedigree Function:</label>
+                    <input type="number" step="0.1" id="diabetes_pedigree_function" name="DiabetesPedigreeFunction" required>
+
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="Age" required>
+
+                    <button type="submit">Detect Diabetes Risk</button>
+                </form>
+            </section>
+        {% endif %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Diabetes Detection System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

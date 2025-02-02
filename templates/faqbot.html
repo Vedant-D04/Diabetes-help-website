@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>FAQBot - Diabetes FAQs | Diabetes Detection System</title>
+    <meta name="description" content="Find answers to common diabetes-related questions or ask your own with our Diabetes FAQBot.">
+    <style>
+        /* Add any additional styling for the button */
+        .thinking {
+            background-color: #f0f0f0; /* Change to a desired color */
+            cursor: not-allowed; /* Change cursor to indicate it is not clickable */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav aria-label="Main navigation">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/detect">Detect Diabetes</a></li>
+                <li><a href="/detect_retinopathy">Detect Diabetic Retinopathy</a></li>
+                <li><a href="/faqbot" aria-current="page">FAQBot</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="intro" aria-labelledby="page-title">
+            <h1 id="page-title">Diabetes FAQBot</h1>
+            <p>Find answers to common diabetes-related questions or ask your own!</p>
+        </section>
+
+        <section class="faq-section" aria-labelledby="faq-title">
+            <h2 id="faq-title">Frequently Asked Questions:</h2>
+            <dl>
+                <dt>What is diabetes?</dt>
+                <dd>Diabetes is a chronic condition that affects how your body processes blood sugar (glucose).</dd>
+                
+                <dt>What are the types of diabetes?</dt>
+                <dd>The main types are Type 1, Type 2, and gestational diabetes.</dd>
+                
+                <dt>How is diabetes diagnosed?</dt>
+                <dd>Through blood tests like fasting blood sugar and HbA1c tests.</dd>
+                
+                <dt>Can diabetes be cured?</dt>
+                <dd>There's no cure for diabetes, but it can be managed with lifestyle changes and medication.</dd>
+            </dl>
+        </section>
+
+        <section class="chatbot-section" aria-labelledby="chatbot-title">
+            <h2 id="chatbot-title">Ask the FAQBot:</h2>
+            <form id="faqbot-form" action="/faqbot" method="POST" onsubmit="changeButtonText(event)">
+                <label for="user-query" class="sr-only">Your question</label>
+                <input type="text" id="user-query" name="user_question" placeholder="Ask a question..." required>
+                <button type="submit" id="ask-button">Ask</button>
+            </form>
+            <div id="response" aria-live="polite">
+                {% if answer %}
+                    <h3>Bot's Answer:</h3>
+                    <p>{{ answer }}</p>
+                {% endif %}
+                {% if error %}
+                    <p class="error">{{ error }}</p>
+                {% endif %}
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Diabetes Detection System. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function changeButtonText(event) {
+            event.preventDefault(); // Prevent form submission for demo purposes
+            const button = document.getElementById("ask-button");
+            button.innerText = "Thinking...";
+            button.classList.add("thinking"); // Add class for styling
+            
+            // Simulate a delay for demonstration (remove in production)
+            setTimeout(() => {
+                // After processing, you would typically submit the form
+                event.target.submit();
+            }, 2000); // Simulate 2 seconds of processing time
+        }
+    </script>
+</body>
+</html>
